@@ -6,16 +6,16 @@ import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
 
-public class WordsToFindReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
+public class WordsToFindReducer extends Reducer<Text, Text, Text, Text> {
     @Override
-    protected void reduce(Text key, Iterable<IntWritable> values, Context context)
+    protected void reduce(Text key, Iterable<Text> values, Context context)
             throws IOException, InterruptedException {
 
-        int count = 0;
+        String contents = "";
 
-        for (IntWritable value : values){
-            count += value.get();
+        for (Text value : values){
+            contents += value.toString()+" ";
         }
-        context.write(key, new IntWritable(count));
+        context.write(key, new Text(contents));
     }
 }

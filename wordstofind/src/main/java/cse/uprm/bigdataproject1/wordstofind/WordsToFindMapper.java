@@ -10,7 +10,7 @@ import twitter4j.TwitterObjectFactory;
 
 import java.io.IOException;
 
-public class WordsToFindMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
+public class WordsToFindMapper extends Mapper<LongWritable, Text, Text, Text> {
     @Override
     public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
         String rawTweet = value.toString();
@@ -18,26 +18,23 @@ public class WordsToFindMapper extends Mapper<LongWritable, Text, Text, IntWrita
         try {
             Status status = TwitterObjectFactory.createStatus(rawTweet);
             String tweet = status.getText().toUpperCase();
-            if (tweet.contains("TRUMP")){
-                context.write(new Text("TRUMP"), new IntWritable(1));
-            }
             if (tweet.contains("FLU")){
-                context.write(new Text("FLU"), new IntWritable(1));
+                context.write(new Text("FLU"), new Text(Long.toString(status.getId())));
             }
             if (tweet.contains("ZIKA")){
-                context.write(new Text("ZIKA"), new IntWritable(1));
+                context.write(new Text("ZIKA"), new Text(Long.toString(status.getId())));
             }
             if (tweet.contains("DIARRHEA")){
-                context.write(new Text("DIARRHEA"), new IntWritable(1));
+                context.write(new Text("DIARRHEA"), new Text(Long.toString(status.getId())));
             }
             if (tweet.contains("EBOLA")){
-                context.write(new Text("EBOLA"), new IntWritable(1));
+                context.write(new Text("EBOLA"), new Text(Long.toString(status.getId())));
             }
-            if (tweet.contains("HEADACHE")){
-                context.write(new Text("HEADACHE"), new IntWritable(1));
+            if (tweet.contains("SWAMP")){
+                context.write(new Text("SWAMP"), new Text(Long.toString(status.getId())));
             }
-            if (tweet.contains("MEASLES")){
-                context.write(new Text("MEASLES"), new IntWritable(1));
+            if (tweet.contains("CHANGE")){
+                context.write(new Text("CHANGE"), new Text(Long.toString(status.getId())));
             }
 
         }
